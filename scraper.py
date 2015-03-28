@@ -76,9 +76,10 @@ def get_team_info(team):
         try:
             player.append(str(item.get_text(strip=True)))
         except:
+            # Catches instances where a string has an apostrophe and breaks the code.
             player.append("XXXXXXXXXXXXX")
         counter = counter + 1
-        # Once all of a single player's info is added, append player to team list.
+        # Once all of a single player's info is added, append player list to student_athletes list.
         # Then, make new list for next player and reset counter.
         if (counter % len(clean_row_labels) == 0):
             student_athletes.append(player)
