@@ -2,10 +2,13 @@ from bs4 import BeautifulSoup as soup
 import urllib
 import csv
 
+student_athletes = []
+clean_row_labels = []
+
 def main():
     global soup
 
-    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103777&SPSID=658436" # Men's basketball
+    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103772&SPSID=668613" # Women's tennis
 
     # Give scraper the URL
     get_html(url)
@@ -36,19 +39,48 @@ def scrape(soup):
     A list of dictionaries will be created. Each dictionary represents
     a student-athlete.
     '''
-    student_athletes = []
+    global clean_row_labels
 
     # Look for td with class "subhdr."
     # This is where the table's headers are.
-    #messy_list = soup.find_all("td", {"class" : "subhdr", "align" : ""})
+    header_html = soup.find_all("td", {"class" : "subhdr", "align" : ""})
 
+    # Fills clean_row_labels with HTML-less text.
+    for item in header_html:
+        clean_row_labels.append(str(item.get_text(strip=True)))
+
+    # Appends "Hometown" because HTML for "Hometown" is different from rest of row labels.
+    clean_row_labels.append("Hometown (Prev School)")
 
     # Look for td with classes "even" and "odd."
     # This is where each player is in table.
-    print(soup.find_all("td", {"class" : "odd"}))
-    print(soup.find_all("td", {"class" : "even"}))
+    odd_players = soup.find_all("td", {"class" : "odd"})
+    even_players = soup.find_all("td", {"class" : "even"})
+    team = odd_players + even_players
 
-    print("Scraped!")
+    get_team_info(team)
+
+    #print("Scraped!")
+
+def get_team_info(team):
+    '''
+    Gets players' information from lists of html tags.
+    '''
+    global student_athletes
+    global clean_row_labels
+    player = []
+    counter = 0
+
+    # Makes list of lists. Each list item is a player's full info.
+    for item in team:
+        player.append(str(item.get_text(strip=True)))
+        counter = counter + 1
+        if (counter % len(clean_row_labels) == 0):
+            student_athletes.append(player)
+            player = []
+            counter = 0
+
+    print(student_athletes)
 
 def list_to_csv(list_of_dict):
     '''
