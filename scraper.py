@@ -2,13 +2,16 @@ from bs4 import BeautifulSoup as soup
 import urllib
 import csv
 
+# List of an entire team. Will exclude unicode syntax.
 student_athletes = []
+
+# List of table row headers without HTML syntax.
 clean_row_labels = []
 
 def main():
     global soup
 
-    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103777&SPSID=658436" # Men's Basketball
+    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103766&SPSID=658391" # Cross Country
 
     # Give scraper the URL
     get_html(url)
