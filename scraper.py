@@ -8,7 +8,7 @@ clean_row_labels = []
 def main():
     global soup
 
-    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103772&SPSID=668613" # Women's tennis
+    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103777&SPSID=658436" # Men's Basketball
 
     # Give scraper the URL
     get_html(url)
@@ -73,13 +73,19 @@ def get_team_info(team):
 
     # Makes list of lists. Each list item is a player's full info.
     for item in team:
-        player.append(str(item.get_text(strip=True)))
+        try:
+            player.append(str(item.get_text(strip=True)))
+        except:
+            player.append("XXXXXXXXXXXXX")
         counter = counter + 1
+        # Once all of a single player's info is added, append player to team list.
+        # Then, make new list for next player and reset counter.
         if (counter % len(clean_row_labels) == 0):
             student_athletes.append(player)
             player = []
             counter = 0
 
+    print(clean_row_labels)
     print(student_athletes)
 
 def list_to_csv(list_of_dict):
