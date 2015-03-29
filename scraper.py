@@ -10,8 +10,6 @@ clean_row_labels = []
 
 def main():
     global soup
-    global student_athletes
-    global clean_row_labels
 
     url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103777&SPSID=658436" # Men's basketball
 
