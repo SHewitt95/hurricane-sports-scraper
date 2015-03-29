@@ -73,12 +73,10 @@ def get_team_info(team):
 
     # Makes list of lists. Each list item is a player's full info.
     for item in team:
-        try:
-            player.append(item.get_text(strip=True).encode('ascii', 'ignore'))
-        except:
-            # Catches instances where a string has an apostrophe and breaks the code.
-            player.append(item.get_text(strip=True))
+        # Encode converts unicode values to ASCII. If unable, the unicode value is ignored.
+        player.append(item.get_text(strip=True).encode('ascii', 'ignore'))
         counter = counter + 1
+
         # Once all of a single player's info is added, append player list to student_athletes list.
         # Then, make new list for next player and reset counter.
         if (counter % len(clean_row_labels) == 0):
@@ -98,7 +96,7 @@ def list_to_csv():
     global clean_row_labels
     global student_athletes
 
-    myfile = open("csv-files/test_file.csv", 'wb')
+    myfile = open("csv-files/test_file2.csv", 'wb')
     writer = csv.writer(myfile)
     writer.writerow(clean_row_labels)
     writer.writerows(student_athletes)
