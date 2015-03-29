@@ -11,7 +11,7 @@ clean_row_labels = []
 def main():
     global soup
 
-    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103766&SPSID=658391" # Cross Country
+    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103777&SPSID=658436" # Men's basketball
 
     # Give scraper the URL
     get_html(url)
@@ -33,8 +33,6 @@ def get_html(url):
 
     # Give html to BeautifulSoup
     soup = soup(html)
-
-    print("Got the HTML!")
 
 def scrape(soup):
     '''
@@ -80,7 +78,7 @@ def get_team_info(team):
             player.append(str(item.get_text(strip=True)))
         except:
             # Catches instances where a string has an apostrophe and breaks the code.
-            player.append("XXXXXXXXXXXXX")
+            player.append(item.get_text(strip=True))
         counter = counter + 1
         # Once all of a single player's info is added, append player list to student_athletes list.
         # Then, make new list for next player and reset counter.
