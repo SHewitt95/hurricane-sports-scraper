@@ -48,7 +48,7 @@ def scrape(soup):
 
     # Fills clean_row_labels with HTML-less text.
     for item in header_html:
-        clean_row_labels.append(str(item.get_text(strip=True)))
+        clean_row_labels.append(item.get_text(strip=True).encode('ascii', 'ignore'))
 
     # Appends "Hometown" because HTML for "Hometown" is different from rest of row labels.
     clean_row_labels.append("Hometown (Prev School)")
@@ -96,7 +96,7 @@ def list_to_csv():
     global clean_row_labels
     global student_athletes
 
-    myfile = open("csv-files/test_file2.csv", 'wb')
+    myfile = open("csv-files/test_file3.csv", 'wb')
     writer = csv.writer(myfile)
     writer.writerow(clean_row_labels)
     writer.writerows(student_athletes)
