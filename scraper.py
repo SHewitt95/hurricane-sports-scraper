@@ -11,7 +11,7 @@ clean_row_labels = []
 def main():
     global soup
 
-    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103777&SPSID=658436" # Men's basketball
+    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103763&SPSID=658368" # Football
 
     # Give scraper the URL. Makes soup.
     get_html(url)
@@ -48,6 +48,8 @@ def scrape(soup):
 
     # Fills clean_row_labels with HTML-less text.
     for item in header_html:
+        # Encode converts unicode values to ASCII.
+        # If unable, the unicode value is ignored.
         clean_row_labels.append(item.get_text(strip=True).encode('ascii', 'ignore'))
 
     # Appends "Hometown" because HTML for "Hometown" is different from rest of row labels.
@@ -73,7 +75,8 @@ def get_team_info(team):
 
     # Makes list of lists. Each list item is a player's full info.
     for item in team:
-        # Encode converts unicode values to ASCII. If unable, the unicode value is ignored.
+        # Encode converts unicode values to ASCII.
+        # If unable, the unicode value is ignored.
         player.append(item.get_text(strip=True).encode('ascii', 'ignore'))
         counter = counter + 1
 
@@ -96,7 +99,7 @@ def list_to_csv():
     global clean_row_labels
     global student_athletes
 
-    myfile = open("csv-files/test_file3.csv", 'wb')
+    myfile = open("csv-files/football.csv", 'wb')
     writer = csv.writer(myfile)
     writer.writerow(clean_row_labels)
     writer.writerows(student_athletes)
