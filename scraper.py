@@ -11,13 +11,19 @@ clean_row_labels = []
 def main():
     global soup
 
-    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103763&SPSID=658368" # Football
+    url = "http://www.hurricanesports.com/SportSelect.dbml?&DB_OEM_ID=28700&SPID=103764&SPSID=658379" # Soccer
 
     # Give scraper the URL. Makes soup.
     get_html(url)
 
     # Scrape page for student-athlete info. Put in list of lists.
     scrape(soup)
+
+    # Converts heights to inches.
+    # Google Spreadsheets does annoying thing where it converts
+    #   heights to dates, so converting to inches in order to
+    #   avoid issue.
+    height_to_inches()
 
     # Convert list of lists into csv
     list_to_csv()
@@ -90,6 +96,26 @@ def get_team_info(team):
     #print(clean_row_labels)
     #print(student_athletes)
 
+def height_to_inches():
+    global student_athletes
+    global clean_row_labels
+
+    # Gets index of height column. HEAVILY assumes that a height column exists
+    #   in the "Ht." format.
+    height_index = clean_row_labels.index("Ht.")
+
+
+    # For loop visits each player list in student_athletes
+    for player in student_athletes:
+        feet, inches = get_num_from_string(player[height_index])
+        pass
+
+def get_num_from_string(height_string):
+    feet = 0
+    inches = 0
+
+    return feet, inches
+
 def list_to_csv():
     '''
     Given the list of dictionaries, this method will convert the list
@@ -99,7 +125,7 @@ def list_to_csv():
     global clean_row_labels
     global student_athletes
 
-    myfile = open("csv-files/football.csv", 'wb')
+    myfile = open("csv-files/soccer.csv", 'wb')
     writer = csv.writer(myfile)
     writer.writerow(clean_row_labels)
     writer.writerows(student_athletes)
