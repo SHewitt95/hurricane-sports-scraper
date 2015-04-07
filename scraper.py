@@ -103,7 +103,7 @@ def height_to_inches():
     # Gets index of height column. HEAVILY assumes that a height column exists
     #   in the "Ht." format.
     height_index = clean_row_labels.index("Ht.")
-
+    clean_row_labels[height_index] = "Ht. (Inches)"
 
     # For loop visits each player list in student_athletes.
     for player in student_athletes:
@@ -128,7 +128,7 @@ def get_num_from_string(height_string):
     # Finds the dash that needs to be skipped.
     dash_to_skip_index = height_string.index("-")
 
-    # Gets inches from string
+    # Gets inches from string.
     inches = int(height_string[dash_to_skip_index+1:])
 
     return (feet, inches)
@@ -142,7 +142,7 @@ def list_to_csv():
     global clean_row_labels
     global student_athletes
 
-    myfile = open("csv-files/soccer.csv", 'wb')
+    myfile = open("csv-files/soccer_inches.csv", 'wb')
     writer = csv.writer(myfile)
     writer.writerow(clean_row_labels)
     writer.writerows(student_athletes)
