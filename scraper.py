@@ -105,16 +105,33 @@ def height_to_inches():
     height_index = clean_row_labels.index("Ht.")
 
 
-    # For loop visits each player list in student_athletes
+    # For loop visits each player list in student_athletes.
     for player in student_athletes:
+        # Gets numbers from string.
         feet, inches = get_num_from_string(player[height_index])
-        pass
+
+        # Converts found numbers to height in inches.
+        height_in_inches = (feet*12) + inches
+
+        # Replaces string value in player list with number value.
+        player[height_index] = height_in_inches
 
 def get_num_from_string(height_string):
     feet = 0
     inches = 0
 
-    return feet, inches
+    # Gets first number (feet). Assumes first number is only one character.
+    # Tallest man ever was 8-feet-11-inches.
+    # I feel like one character is a safe assumption.
+    feet = int(height_string[0])
+
+    # Finds the dash that needs to be skipped.
+    dash_to_skip_index = height_string.index("-")
+
+    # Gets inches from string
+    inches = int(height_string[dash_to_skip_index+1:])
+
+    return (feet, inches)
 
 def list_to_csv():
     '''
